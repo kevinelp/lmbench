@@ -160,7 +160,7 @@ typedef int64 off64_t;
 #endif /* HAVE_RAND */
 #endif /* HAVE_DRAND48 */
 
-#ifdef WIN32
+#if defined(WIN32) && !defined(__CYGWIN__)
 #include <process.h>
 #define getpid _getpid
 int	gettimeofday(struct timeval *tv, struct timezone *tz);

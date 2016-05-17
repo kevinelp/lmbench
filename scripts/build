@@ -134,6 +134,16 @@ else
 fi
 rm -f ${BASE}$$ ${BASE}$$.o ${BASE}$$.c
 
+# check for -ltirpc (cygwin)
+echo "extern int pmap_set(); main() { pmap_set(); }" >${BASE}$$.c
+if ${CC} ${CFLAGS} -I/usr/include/tirpc -o ${BASE}$$ ${BASE}$$.c ${LDLIBS} 1>${NULL} 2>${NULL}; then
+       true;
+else
+       ${CC} ${CFLAGS} -I/usr/include/tirpc -o ${BASE}$$ ${BASE}$$.c ${LDLIBS} -ltirpc 1>${NULL} 2>${NULL} \
+               && LDLIBS="${LDLIBS} -ltirpc" && CFLAGS="${CFLAGS} -I/usr/include/tirpc"
+fi
+rm -f ${BASE}$$ ${BASE}$$.o ${BASE}$$.c
+
 # check for OSs that have S_IFFIFO instead of S_IFIFO
 echo "#include <sys/stat.h>" > ${BASE}$$.c
 echo "main() { return (S_IFIFO); }" >> ${BASE}$$.c

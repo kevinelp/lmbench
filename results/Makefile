@@ -109,6 +109,9 @@ GDISK=-below -close -grid -nolines
 summary: $(SRCS)
 	@$(SCRIPTS)getsummary $(LIST)
 
+sumcsv: $(SRCS)
+	@$(SCRIPTS)getsummary-csv $(LIST)
+
 percent: $(SRCS)
 	@$(SCRIPTS)getpercent $(LIST)
 
